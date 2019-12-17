@@ -71,12 +71,12 @@
 				7D6B31792341CD870080EBEF /* SceneDelegate.swift */,
 				7D6B317E2341CD870080EBEF /* ContentView.swift */,
 				7DBB2D83234F12330099AD63 /* ToDoItemView.swift */,
+				7D7D17582385455200E72C98 /* CoreDataManager.swift */,
 				7D6B31802341CD880080EBEF /* Assets.xcassets */,
 				7D6B31852341CD880080EBEF /* LaunchScreen.storyboard */,
 				7D6B31882341CD880080EBEF /* Info.plist */,
 				7D6B317B2341CD870080EBEF /* CoreDataToDO.xcdatamodeld */,
 				7D6B31822341CD880080EBEF /* Preview Content */,
-				7D7D17582385455200E72C98 /* CoreDataManager.swift */,
 			);
 			path = CoreDataToDO;
 			sourceTree = "<group>";

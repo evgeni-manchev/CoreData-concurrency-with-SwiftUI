@@ -21,16 +21,15 @@ class CoreDataManager {
         return moc
     }()
     
-    lazy var managedObjectContext: NSManagedObjectContext = {
+    lazy var mainManagedObjectContext: NSManagedObjectContext = {
         let managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         managedObjectContext.parent = self.saveManagedObjectContext
         return managedObjectContext
     }()
     
-    let request : NSFetchRequest<ToDoItem> = ToDoItem.getAllToDoItems()
-    
     func fetchItems() -> [ToDoItem] {
-        if let results = try? CoreDataManager.sharedInstance.managedObjectContext.fetch(request) {
+        let request : NSFetchRequest<ToDoItem> = ToDoItem.getAllToDoItems()
+        if let results = try? CoreDataManager.sharedInstance.mainManagedObjectContext.fetch(request) {
             return results
         } else {
             print("Could not fetch CoreData objects!")
@@ -39,19 +38,19 @@ class CoreDataManager {
     }
     
     func saveContext() {
-        guard  managedObjectContext.hasChanges || saveManagedObjectContext.hasChanges else {
+        guard  mainManagedObjectContext.hasChanges || saveManagedObjectContext.hasChanges else {
             return
         }
         
         do {
-            try CoreDataManager.sharedInstance.managedObjectContext.obtainPermanentIDs(for: Array(CoreDataManager.sharedInstance.managedObjectContext.insertedObjects))
+            try CoreDataManager.sharedInstance.mainManagedObjectContext.obtainPermanentIDs(for: Array(CoreDataManager.sharedInstance.mainManagedObjectContext.insertedObjects))
         } catch {
             print("Failed to obtain permanent object IDs!")
         }
         
-        managedObjectContext.performAndWait {
+        mainManagedObjectContext.performAndWait {
             do {
-                try self.managedObjectContext.save()
+                try self.mainManagedObjectContext.save()
             } catch {
                 fatalError("Error saving main managed object context! \(error)")
             }
